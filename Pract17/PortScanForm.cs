@@ -30,7 +30,22 @@ namespace Pract17
             this.progressBarScan.Maximum = EndPort-BeginPort +1;
             progressBarScan.Value = 0;
             listView1.Items.Clear();
-            IPAddress addr = IPAddress.Parse(this.textBoxIP.Text);
+
+            IPAddress addr = new IPAddress(0);
+            try
+            {
+                addr = IPAddress.Parse(this.textBoxIP.Text);
+            }
+            catch (ArgumentNullException)
+            {
+                MessageBox.Show("IP адрес не введён", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Неверный формат ввода\n\nВведите четыре числа от 0 до 255 (включительно)\nв формате 123.45.6.789 (просто перечислить чила через точку без пробелов)", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            
             for (int i = BeginPort; i <= EndPort; i++)
             {
                 //С оздаем и инициализируем сокет 
