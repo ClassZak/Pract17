@@ -37,6 +37,9 @@
             this.numericUpDownPortEnd = new System.Windows.Forms.NumericUpDown();
             this.progressBarScan = new System.Windows.Forms.ProgressBar();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPortBegin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPortEnd)).BeginInit();
             this.SuspendLayout();
@@ -115,7 +118,7 @@
             this.numericUpDownPortEnd.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownPortEnd.TabIndex = 6;
             this.numericUpDownPortEnd.Value = new decimal(new int[] {
-            5000,
+            50,
             0,
             0,
             0});
@@ -129,6 +132,12 @@
             // 
             // listView1
             // 
+            this.listView1.AutoArrange = false;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(12, 40);
             this.listView1.Name = "listView1";
@@ -136,6 +145,19 @@
             this.listView1.Sorting = System.Windows.Forms.SortOrder.Descending;
             this.listView1.TabIndex = 8;
             this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Порт";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Открыт";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Закрыт";
             // 
             // PortScanForm
             // 
@@ -171,6 +193,9 @@
         private System.Windows.Forms.NumericUpDown numericUpDownPortEnd;
         private System.Windows.Forms.ProgressBar progressBarScan;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

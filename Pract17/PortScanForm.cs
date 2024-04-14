@@ -27,16 +27,14 @@ namespace Pract17
         {
             int BeginPort = Convert.ToInt32(this.numericUpDownPortBegin.Value);
             int EndPort = Convert.ToInt32(numericUpDownPortEnd.Value);
-            int i;
             this.progressBarScan.Maximum = EndPort-BeginPort +1;
             progressBarScan.Value = 0;
             listView1.Items.Clear();
             IPAddress addr = IPAddress.Parse(this.textBoxIP.Text);
-            for (i = BeginPort; i <= EndPort; i++)
+            for (int i = BeginPort; i <= EndPort; i++)
             {
                 //С оздаем и инициализируем сокет 
-                long ad = IPAddress.Loopback.Address;
-                IPEndPoint ер = new IPEndPoint((addr.Address == ad) ? IPAddress.Any : addr, i);
+                IPEndPoint ер = new IPEndPoint(addr, i);
                 Socket soc = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 // Пытаемся соединиться с сервером
                 
@@ -44,24 +42,37 @@ namespace Pract17
                 IPEndPoint iPEndPoint=new IPEndPoint(IPAddress.Any, i);
                 IAsyncResult asyncResult = soc.BeginConnect(ер,
                 new AsyncCallback(ConnectCallback), soc);
+                bool closed=false;
                 if (!asyncResult.AsyncWaitHandle.WaitOne(30, false))
                 {
                     soc.Close();
-                    this.listView1.Items.Add("Порт " + i.ToString());
-                    this.listView1.Items[i - BeginPort].SubItems.Add("");
-                    this.listView1.Items[i - BeginPort].SubItems.Add("закрыт");
-                    this.listView1.Refresh();
-                    progressBarScan.Value += 1;
+                    listView1.Items.Add("Порт " + i.ToString());
+                    listView1.Items[0].SubItems.Add("");
+                    listView1.Items[0].SubItems.Add("закрыт");
+                    //listView1.Sort();
+                    listView1.Refresh();
+                    closed = true;
                 }
-                else
+                if(!closed)
                 {
                     soc.Close();
                     listView1.Items.Add("Порт " + i.ToString());
-                    listView1.Items[i - BeginPort].SubItems.Add("открыт");
-                    progressBarScan.Value += 1;
+                    listView1.Items[0].SubItems.Add("открыт");
+                    //listView1.Sort();
+                    listView1.Refresh();
                 }
+                ++progressBarScan.Value;
             }
             progressBarScan.Value = 0;
+            listView1.Sort();
+            listView1.Refresh();
+            for (int i = 0; i != listView1.Items.Count; ++i)
+            {
+                if (listView1.Items[i].SubItems.Count!=0)
+                listView1.Items[i].SubItems.Add("открыт");
+            }
+            listView1.Sort();
+            listView1.Refresh();
         }
 
 
